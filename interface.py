@@ -125,9 +125,6 @@ def rarest_words(book):
     """Returns list of top 10 rarest words"""
     unique_dict = unique_words(book)
 
-
-
-
     count_list = []
     #
     # unique_dict.items()
@@ -150,8 +147,15 @@ def rarest_words(book):
     return count_list
 
 
-def word_frequency(a_word):
+def word_frequency(book):
     """Returns count of user input word."""
+    unique_dict = unique_words(book)
+
+    word_array = pd.DataFrame(list(unique_dict.items()), columns=['Word', 'Occurence'])
+
+    return word_array
+
+
 
 
 def average_length_sentence(): # feels bad man

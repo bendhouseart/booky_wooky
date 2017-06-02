@@ -1,4 +1,7 @@
 import math
+import re
+from collections import Counter
+import pandas as pd
 
 ari_scale = {
 
@@ -96,16 +99,55 @@ def shortest_words():
     return 0
 
 
-def unique_word_count():
+def unique_words(book):
+    with  open(book, 'r') as myfile:
+        booky = myfile.read().lower()
+
+    seperate_into_words = re.findall(r'\b\w+\b(?![^<]*>)', booky)
+
+    unique = Counter(seperate_into_words)
+    return unique
+
+
+def unique_word_count(book):
     """Counts the number of unique words in bookx returns integer count"""
-    return 0
+
+    count = unique_words(book)
+
+    return len(count)
 
 
-def rarest_words():
+
+
+
+
+def rarest_words(book):
     """Returns list of top 10 rarest words"""
-    for i in range(0,10):
-         # do stuff
-    return 0
+    unique_dict = unique_words(book)
+
+
+
+
+    count_list = []
+    #
+    # unique_dict.items()
+    #
+    unsorted = [(v,k) for k,v in unique_dict.items()]
+
+    smallest_num = min(unsorted)
+    word_array = pd.DataFrame(list(unique_dict.items()), columns=['Word', 'Occurence'])
+
+    for index, row in word_array.iterrows():
+        if row['Occurence'] == smallest_num[0]:
+            count_list.append(row['Word'])
+
+    # for key, value in unsorted.items():
+    #     if value == str(smallest_num):
+    #         count_list.append(key)#, unique_dict.value)
+
+    #rarest_list = [x,y for x,y in unique_dict if x.items() == smallest_num]
+
+    return count_list
 
 
 def word_frequency(a_word):

@@ -90,12 +90,12 @@ def calculate_ari(x, y, z):
 
 
 def longest_words():
-    """Returns a list of the 10 longest words"""
+    # TODO """Returns a list of the 10 longest words"""
     return 0
 
 
 def shortest_words():
-    """Returns a list of the 10 shortest non article words"""
+    # TODO """Returns a list of the 10 shortest non article words"""
     return 0
 
 
@@ -117,22 +117,12 @@ def unique_word_count(book):
     return len(count)
 
 
-
-
-
-
 def rarest_words(book):
     """Returns list of top 10 rarest words"""
     unique_dict = unique_words(book)
 
-
-
-
     count_list = []
-    #
-    # unique_dict.items()
-    #
-    unsorted = [(v,k) for k,v in unique_dict.items()]
+    unsorted = [(v, k) for k, v in unique_dict.items()]
 
     smallest_num = min(unsorted)
     word_array = pd.DataFrame(list(unique_dict.items()), columns=['Word', 'Occurence'])
@@ -141,38 +131,39 @@ def rarest_words(book):
         if row['Occurence'] == smallest_num[0]:
             count_list.append(row['Word'])
 
-    # for key, value in unsorted.items():
-    #     if value == str(smallest_num):
-    #         count_list.append(key)#, unique_dict.value)
-
-    #rarest_list = [x,y for x,y in unique_dict if x.items() == smallest_num]
-
     return count_list
 
 
-def word_frequency(a_word):
+def word_frequency(book):
     """Returns count of user input word."""
+    unique_dict = unique_words(book)
+
+    word_array = pd.DataFrame(list(unique_dict.items()), columns=['Word', 'Occurence'])
+
+    return word_array
 
 
-def average_length_sentence(): # feels bad man
-    """Returns the average length in words and characters, maybe."""
+
+
+def average_length_sentence():  # feels bad man
+    # TODO """Returns the average length in words and characters, maybe."""
 
 
 def minimum_sentence_length():
-    """minimum sentence length returns it does."""
+    # TODO """minimum sentence length returns it does."""
 
 
 def max_sentence_length():
-    """Returns maximum sentence length, yah wind bag."""
+    # TODO """Returns maximum sentence length, yah wind bag."""
 
 
 def mimic():
-    """TBD"""
+    # TODO """TBD"""
 
 
 def count_syllables():
-    """"Returns total number of syllables in book."""
+    # TODO """"Returns total number of syllables in book."""
 
 
 def lexical_density():
-    """Returns lexical density."""
+    # TODO """Returns lexical density."""

@@ -1,5 +1,5 @@
 import interface
 
-herp = interface.rarest_words('gettysburger.txt')
+herp = interface.word_frequency('gettysburger.txt')
 
 print(herp)

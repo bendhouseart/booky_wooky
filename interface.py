@@ -38,9 +38,10 @@ ari_scale = {
 
 
 def count_words(file):
+    book = open_file(file)
     num_words = 0
 
-    for word in file.read().split():
+    for word in book.read().split():
         num_words += 1
 
     return num_words
@@ -140,9 +141,12 @@ def word_frequency(book):
 
 
 
-def average_length_sentence():  # feels bad man
-    # TODO """Returns the average length in words and characters, maybe."""
-    '''test'''
+def average_length_sentence(file):  # feels bad man
+    sentences = count_sentences(file)
+    words = count_words(file)
+
+    return words/sentences
+
 
 
 def minimum_sentence_length():

@@ -1,5 +1,5 @@
 import interface
 file = 'gettysburger.txt'
-herp = interface.count_sentences(file)
+herp = interface.average_length_sentence(file)
 
 print(herp)

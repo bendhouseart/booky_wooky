@@ -1,5 +1,5 @@
 import interface
-
-herp = interface.word_frequency('gettysburger.txt')
+file = 'gettysburger.txt'
+herp = interface.count_sentences(file)
 
 print(herp)

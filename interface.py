@@ -2,6 +2,7 @@ import math
 import re
 from collections import Counter
 import pandas as pd
+import nltk
 
 ari_scale = {
 
@@ -64,17 +65,11 @@ def count_characters(file):
     return number_chars - blanks
 
 
-def count_sentences(file):
-    file.seek(0)
+def count_sentences(book):
+    with open(book, 'r') as myfile:
+        booky = myfile.read().lower()
 
-    count = 0
-
-    for line in file:
-
-        for c in line:
-
-            if c == '.' or c == '!' or c == '?':
-                count += 1
+    count = len(nltk.sent_tokenize(booky))
 
     return count
 
@@ -147,23 +142,29 @@ def word_frequency(book):
 
 def average_length_sentence():  # feels bad man
     # TODO """Returns the average length in words and characters, maybe."""
+    '''test'''
 
 
 def minimum_sentence_length():
     # TODO """minimum sentence length returns it does."""
+    '''test'''
 
 
 def max_sentence_length():
     # TODO """Returns maximum sentence length, yah wind bag."""
+    '''test'''
 
 
 def mimic():
     # TODO """TBD"""
+    '''test'''
 
 
 def count_syllables():
     # TODO """"Returns total number of syllables in book."""
+    '''test'''
 
 
 def lexical_density():
     # TODO """Returns lexical density."""
+    '''test'''

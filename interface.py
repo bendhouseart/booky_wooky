@@ -3,6 +3,8 @@ import re
 from collections import Counter
 import pandas as pd
 import nltk
+from nltk.corpus import cmudict
+import string
 
 ari_scale = {
 
@@ -70,9 +72,9 @@ def count_sentences(book):
     with open(book, 'r') as myfile:
         booky = myfile.read().lower()
 
-    count = len(nltk.sent_tokenize(booky))
+    count = nltk.sent_tokenize(booky)
 
-    return count
+    return len(count)
 
 
 def open_file(text):
@@ -85,14 +87,37 @@ def calculate_ari(x, y, z):
     return 4.71 * x / y + 0.5 * y / z - 21.43
 
 
-def longest_words():
-    # TODO """Returns a list of the 10 longest words"""
-    return 0
+def longest_words(book):
+    """Returns a list of the 10 longest words"""
+
+    unique_dict = unique_words(book)
+
+    word_array = pd.DataFrame(list(unique_dict.items()), columns=['Word', 'Occurence'])
+    word_array['length'] = word_array['Word'].map(lambda x: len(x))
+
+    sorted = word_array.sort_values('length', ascending=False)
+    max_value = max(sorted['length'])
+
+    longest_list = word_array.loc[word_array['length'] == max_value]
+
+    return longest_list
 
 
-def shortest_words():
-    # TODO """Returns a list of the 10 shortest non article words"""
-    return 0
+
+
+def shortest_words(book):
+    # TODO
+    unique_dict = unique_words(book)
+
+    word_array = pd.DataFrame(list(unique_dict.items()), columns=['Word', 'Occurence'])
+    word_array['length'] = word_array['Word'].map(lambda x: len(x))
+
+    sorted = word_array.sort_values('length', ascending=False)
+    min_value = min(sorted['length'])
+
+    longest_list = word_array.loc[word_array['length'] == min_value]
+
+    return longest_list
 
 
 def unique_words(book):
@@ -148,27 +173,68 @@ def average_length_sentence(file):  # feels bad man
     return words/sentences
 
 
+def sentence_tuples(book):
+    with open(book, 'r') as myfile:
+        booky = myfile.read().lower()
 
-def minimum_sentence_length():
-    # TODO """minimum sentence length returns it does."""
+    sentences = nltk.sent_tokenize(booky)
+
+    sentences_tuple_list = []
+
+    for sentence_element in sentences:
+        num_words = 0
+
+        words_in_sentences = nltk.word_tokenize(sentence_element)
+        sentences_tuple_list.append((len(words_in_sentences), sentence_element))
+
+    return sentences_tuple_list
+
+def minimum_sentence_length(book):
     '''test'''
+    sentence_tuple_list = sentence_tuples(book)
+    minimum = min(sentence_tuple_list)
+
+    return minimum[0]
 
 
-def max_sentence_length():
-    # TODO """Returns maximum sentence length, yah wind bag."""
+def max_sentence_length(book):
     '''test'''
+    sentence_tuple_list = sentence_tuples(book)
+    maximum = max(sentence_tuple_list)
 
+    return maximum[0]
 
 def mimic():
     # TODO """TBD"""
     '''test'''
 
 
-def count_syllables():
-    # TODO """"Returns total number of syllables in book."""
-    '''test'''
+def count_syllables(book):
+    """"Returns total number of syllables in book."""
+    d = dict(cmudict.entries())
+    with  open(book, 'r') as myfile:
+        booky = myfile.read().lower()
+    tokenized_book = nltk.word_tokenize(booky)
+
+    count = 0
+    for word in tokenized_book:
+        count += ( nsly(word, d))
+
+    return count
+
+def nsly(word, d):
+    if word in d:
+        return len([ph for ph in d[word] if ph.strip(string.ascii_letters)])
+    else:
+        return 0
 
 
-def lexical_density():
-    # TODO """Returns lexical density."""
-    '''test'''
+
+def lexical_density(book):
+    """Returns lexical density."""
+    unique = len(unique_words(book))
+    with  open(book, 'r') as myfile:
+        booky = myfile.read().lower()
+    total =  len(re.findall(r'\b\w+\b(?![^<]*>)', booky))
+
+    return unique/total
